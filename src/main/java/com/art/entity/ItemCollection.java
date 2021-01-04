@@ -22,6 +22,9 @@ public class ItemCollection {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "collection")
+    private Set<Item> items;
+
     public Set<Item> getItems() {
         return items;
     }
@@ -29,9 +32,6 @@ public class ItemCollection {
     public void setItems(Set<Item> items) {
         this.items = items;
     }
-
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "collection")
-    private Set<Item> items;
 
     public ItemCollection(){}
 

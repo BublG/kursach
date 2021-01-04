@@ -2,6 +2,7 @@ package com.art.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.Set;
 
 @Entity
 public class Item {
@@ -17,7 +18,18 @@ public class Item {
     @JoinColumn(name = "collection_id")
     private ItemCollection collection;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Tag> tags;
+
     public Item(){}
+
+    public Set<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(Set<Tag> tags) {
+        this.tags = tags;
+    }
 
     public long getId() {
         return id;
