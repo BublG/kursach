@@ -2,6 +2,7 @@ package com.art.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.Set;
 
 @Entity
 @Table(name = "t_collection")
@@ -20,6 +21,17 @@ public class ItemCollection {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
+
+    public Set<Item> getItems() {
+        return items;
+    }
+
+    public void setItems(Set<Item> items) {
+        this.items = items;
+    }
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "collection")
+    private Set<Item> items;
 
     public ItemCollection(){}
 
