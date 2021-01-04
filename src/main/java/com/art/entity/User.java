@@ -4,9 +4,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 import java.util.Collection;
+import java.util.Set;
 
 @Entity
 @Table(name = "t_user")
@@ -27,7 +27,18 @@ public class User implements UserDetails {
 
     private int status;
 
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
+    private Set<ItemCollection> collections;
+
     public User() {
+    }
+
+    public Set<ItemCollection> getCollections() {
+        return collections;
+    }
+
+    public void setCollections(Set<ItemCollection> collections) {
+        this.collections = collections;
     }
 
     @Override
