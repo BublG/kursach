@@ -6,13 +6,17 @@
 </head>
 <body>
 <div>
-    <h4><a href="/registration">Register</a>
-    <a href="/login">Login</a></h4>
+    <h4>
+        <a href="/registration">Register</a>
+        <a href="/login">Login</a>
+        <div style="float: right" th:if="${username}">
+            <a href=/profile title="Your profile" th:text="${username}"></a>
+        </div>
+    </h4>
 </div>
 <hr>
-<div id="react"></div>
 
-<div th:if = "po">opoppop</div>
+<div id="react"></div>
 
 <script src="built/bundle.js"></script>
 

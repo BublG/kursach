@@ -13,12 +13,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private UserService userService;
-
     @Autowired
-    void setUserService(UserService userService) {
-        this.userService = userService;
-    }
+    private UserService userService;
 
     @Bean
     public PasswordEncoder bCryptPasswordEncoder() {
@@ -28,10 +24,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .authorizeRequests().anyRequest().permitAll()
+                .authorizeRequests()
+                .antMatchers("/", "/login", "/registration").permitAll()
+                .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                .loginPage("/login");
+                .loginPage("/login").defaultSuccessUrl("/", true)
+                .usernameParameter("username")
+                .passwordParameter("password")
+                .permitAll()
+                .and()
+                .logout()
+                .permitAll();
     }
 
     @Autowired

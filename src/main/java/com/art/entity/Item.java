@@ -5,6 +5,7 @@ import javax.validation.constraints.Size;
 import java.util.Set;
 
 @Entity
+@Table(name = "t_item")
 public class Item {
 
     @Id
