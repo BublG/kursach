@@ -18,12 +18,22 @@ public class ItemCollection {
     @Size(min = 1)
     private String description;
 
+    private String topic;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "collection")
     private Set<Item> items;
+
+    public String getTopic() {
+        return topic;
+    }
+
+    public void setTopic(String topic) {
+        this.topic = topic;
+    }
 
     public Set<Item> getItems() {
         return items;

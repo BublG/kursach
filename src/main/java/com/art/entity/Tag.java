@@ -9,6 +9,7 @@ import java.util.Set;
 public class Tag {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Size(min = 1)
