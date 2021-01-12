@@ -24,8 +24,17 @@ public class ItemCollection {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "collection")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "itemCollection")
     private Set<Item> items;
+
+    public ItemCollection(){}
+
+    public ItemCollection(String name, String description, String topic, Set<Item> items) {
+        this.name = name;
+        this.description = description;
+        this.topic = topic;
+        this.items = items;
+    }
 
     public String getTopic() {
         return topic;
@@ -42,8 +51,6 @@ public class ItemCollection {
     public void setItems(Set<Item> items) {
         this.items = items;
     }
-
-    public ItemCollection(){}
 
     public long getId() {
         return id;

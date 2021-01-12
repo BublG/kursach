@@ -1,11 +1,9 @@
 package com.art.entity;
 
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
-import java.util.Collection;
 import java.util.Set;
 
 @Entity
@@ -28,21 +26,21 @@ public class User implements UserDetails {
     private int status;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
-    private Set<ItemCollection> collections;
+    private Set<ItemCollection> itemCollections;
 
     public User() {
     }
 
     public Set<ItemCollection> getCollections() {
-        return collections;
+        return itemCollections;
     }
 
-    public void setCollections(Set<ItemCollection> collections) {
-        this.collections = collections;
+    public void setCollections(Set<ItemCollection> itemCollections) {
+        this.itemCollections = itemCollections;
     }
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
+    public java.util.Collection getAuthorities() {
         return null;
     }
 

@@ -55,7 +55,6 @@ public class UserService implements UserDetailsService {
             return false;
         }
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        user.setStatus(1);
         userRepository.save(user);
         return true;
     }

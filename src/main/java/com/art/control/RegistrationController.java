@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
+import java.util.HashSet;
 
 @Controller
 public class RegistrationController {
@@ -32,6 +33,8 @@ public class RegistrationController {
             model.addAttribute("errors", bindingResult.getAllErrors());
             return "registration";
         }
+        userForm.setStatus(1);
+        userForm.setCollections(new HashSet<>());
         if (!userService.saveUser(userForm)) {
             model.addAttribute("usernameError", "Пользователь с таким именем уже существует");
             return "registration";

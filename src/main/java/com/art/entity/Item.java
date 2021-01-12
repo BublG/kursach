@@ -17,7 +17,7 @@ public class Item {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "collection_id")
-    private ItemCollection collection;
+    private ItemCollection itemCollection;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Tag> tags;
@@ -49,11 +49,11 @@ public class Item {
     }
 
     public ItemCollection getCollection() {
-        return collection;
+        return itemCollection;
     }
 
-    public void setCollection(ItemCollection collection) {
-        this.collection = collection;
+    public void setCollection(ItemCollection itemCollection) {
+        this.itemCollection = itemCollection;
     }
 
 }
