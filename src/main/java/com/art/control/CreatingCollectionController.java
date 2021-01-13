@@ -32,7 +32,8 @@ public class CreatingCollectionController {
 
     @PostMapping("/profile/createCollection")
     public String createCollection(@RequestParam Map<String, String> form, Model model) {
-        System.out.println(form);
+        if (!checkFields(form, model))
+            return "createCollection";
         ItemCollection itemCollection = new ItemCollection(form.get("name"), form.get("description"),
                 form.get("topic"), new HashSet<>());
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -42,6 +43,19 @@ public class CreatingCollectionController {
             model.addAttribute("nameError", "Collection with the same name already exists");
             return "createCollection";
         }
-        return "profile";
+        return "redirect:/profile";
+    }
+
+    private boolean checkFields(Map<String, String> form, Model model) {
+        boolean b = true;
+        if (form.get("name").length() < 1) {
+            model.addAttribute("nameError", "This field is necessarily");
+            b = false;
+        }
+        if (form.get("description").length() < 1) {
+            model.addAttribute("descriptionError", "This field is necessarily");
+            b = false;
+        }
+        return b;
     }
 }

@@ -1,13 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-<h1>Profile</h1>
+<div>
+    <div>Profile
+    <div style="float: right">
+        <a href=/ title="Your profile">To Home Page</a>
+    </div>
+    </div>
+</div>
+<hr>
 <form action="/profile/createCollection">
-    <button>Create itemCollection</button>
+    <button>Create collection</button>
+    <table>
+        <thead>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Topic</th>
+        </thead>
+
+        <th:block th:each="collection : ${collections}">
+            <tr>
+                <td th:text="${collection.id}"></td>
+                <td th:text="${collection.name}"></td>
+                <td th:text="${collection.description}"></td>
+                <td th:text="${collection.topic}"></td>
+            </tr>
+        </th:block>
+    </table>
 </form>
 </body>
 </html>

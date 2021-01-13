@@ -5,7 +5,7 @@
     <title>Title</title>
 </head>
 <body>
-<h1>Creating a itemCollection</h1>
+<h1>Creating a collection</h1>
 <form action="/profile/createCollection" method="post">
     <input type="hidden"
            th:name="${_csrf.parameterName}"
@@ -14,11 +14,13 @@
     <h3>Name</h3>
     <label>
         <input type="text" name="name"/>
+        <span th:text="${nameError}"></span>
     </label>
     <p>
     <h3>Description</h3>
     <label>
         <textarea name="description" cols="40" rows="4"></textarea>
+        <span th:text="${descriptionError}"></span>
     </label>
     <p>
     <h3>Topic</h3>

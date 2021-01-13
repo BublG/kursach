@@ -5,6 +5,8 @@ import com.art.repository.CollectionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CollectionService {
 
@@ -22,5 +24,9 @@ public class CollectionService {
         }
         collectionRepository.save(itemCollection);
         return true;
+    }
+
+    public List<ItemCollection> findAll() {
+        return collectionRepository.findAll();
     }
 }
