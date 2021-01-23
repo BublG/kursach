@@ -17,6 +17,7 @@
     <button>Create collection</button>
     <table>
         <thead>
+        <th>Image</th>
         <th>Id</th>
         <th>Name</th>
         <th>Description</th>
@@ -25,6 +26,9 @@
 
         <th:block th:each="collection : ${collections}">
             <tr>
+                <td>
+                    <img th:src="${collection.image}" width="100" height="100">
+                </td>
                 <td th:text="${collection.id}"></td>
                 <td th:text="${collection.name}"></td>
                 <td th:text="${collection.description}"></td>

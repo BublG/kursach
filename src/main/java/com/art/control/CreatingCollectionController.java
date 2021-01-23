@@ -34,8 +34,9 @@ public class CreatingCollectionController {
     public String createCollection(@RequestParam Map<String, String> form, Model model) {
         if (!checkFields(form, model))
             return "createCollection";
-        ItemCollection itemCollection = new ItemCollection(form.get("name"), form.get("description"),
-                form.get("topic"), new HashSet<>());
+        ItemCollection itemCollection = new ItemCollection(form.get("name"),
+                form.get("description"), form.get("topic"), new HashSet<>(),
+                form.get("image"));
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         itemCollection.setUser(user);
         user.getCollections().add(itemCollection);

@@ -20,6 +20,8 @@ public class ItemCollection {
 
     private String topic;
 
+    private String image;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
@@ -29,11 +31,21 @@ public class ItemCollection {
 
     public ItemCollection(){}
 
-    public ItemCollection(String name, String description, String topic, Set<Item> items) {
+    public ItemCollection(String name, String description, String topic,
+                          Set<Item> items, String image) {
         this.name = name;
         this.description = description;
         this.topic = topic;
         this.items = items;
+        this.image = image;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getTopic() {
