@@ -7,8 +7,15 @@
 <body>
 <div>
     <div>Profile
-    <div style="float: right">
         <a href=/ title="Your profile">To Home Page</a>
+    <div style="float: right">
+        <form th:action="@{/logout}" method="post">
+            <input type="submit" value="Sign Out"/>
+            <input
+                    type="hidden"
+                    th:name="${_csrf.parameterName}"
+                    th:value="${_csrf.token}"/>
+        </form>
     </div>
     </div>
 </div>

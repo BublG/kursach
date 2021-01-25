@@ -12,7 +12,7 @@ public class ProfileController {
     @GetMapping("/profile")
     public String profile(Model model) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        model.addAttribute("collections", user.getCollections());
+        model.addAttribute("collections", user.getItemCollections());
         return "profile";
     }
 }

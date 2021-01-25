@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -39,7 +38,7 @@ public class CreatingCollectionController {
                 form.get("image"));
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         itemCollection.setUser(user);
-        user.getCollections().add(itemCollection);
+        user.getItemCollections().add(itemCollection);
         if (!collectionService.saveCollection(itemCollection)) {
             model.addAttribute("nameError", "Collection with the same name already exists");
             return "createCollection";

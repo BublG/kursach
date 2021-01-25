@@ -1,9 +1,11 @@
 package com.art.entity;
 
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.Collection;
 import java.util.Set;
 
 @Entity
@@ -17,7 +19,7 @@ public class User implements UserDetails {
     @Size(min = 1, message = "Enter username")
     private String username;
 
-    @Size(min = 8, message = "Password is at least 8 characters")
+    @Size(min = 4, message = "Password is at least 4 characters")
     private String password;
 
     @Size(min = 1, message = "Enter email")
@@ -28,20 +30,31 @@ public class User implements UserDetails {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
     private Set<ItemCollection> itemCollections;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Role> roles;
+
     public User() {
     }
 
-    public Set<ItemCollection> getCollections() {
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    public Set<ItemCollection> getItemCollections() {
         return itemCollections;
     }
 
-    public void setCollections(Set<ItemCollection> itemCollections) {
+    public void setItemCollections(Set<ItemCollection> itemCollections) {
         this.itemCollections = itemCollections;
     }
 
     @Override
-    public java.util.Collection getAuthorities() {
-        return null;
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return roles;
     }
 
     @Override

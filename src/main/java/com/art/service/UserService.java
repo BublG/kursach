@@ -1,5 +1,6 @@
 package com.art.service;
 
+import com.art.entity.Role;
 import com.art.entity.User;
 import com.art.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -54,6 +56,7 @@ public class UserService implements UserDetailsService {
         if (userFromDB != null) {
             return false;
         }
+        user.setRoles(Collections.singleton(new Role(1L, "ROLE_USER")));
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);
         return true;
