@@ -21,7 +21,7 @@
         </form>
         <a th:unless="${username}" href="/registration">Register</a>
         <a th:unless="${username}" href="/login">Login</a>
-        <a href=/profile title="Your profile"
+        <a th:href="@{'profile?name=' + ${username} }" title="Your profile"
            th:if="${username}" th:text="${username}"></a>
 <!--        style="float: right"-->
     </h4>
@@ -46,6 +46,11 @@
             <td th:text="${collection.name}"></td>
             <td th:text="${collection.description}"></td>
             <td th:text="${collection.topic}"></td>
+            <td>
+                <a th:href="@{'/collection?id=' + ${collection.id} }">
+                    Open
+                </a>
+            </td>
         </tr>
     </th:block>
 </table>

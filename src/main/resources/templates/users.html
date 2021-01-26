@@ -1,11 +1,71 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script type="text/javascript">
+        let checked = false;
+
+        function checkedAll() {
+            const aa = document.getElementById("frm1");
+            if (checked == false) {
+                checked = true
+            } else {
+                checked = false
+            }
+            for (let i = 0; i < aa.elements.length; i++) {
+                aa.elements[i].checked = checked;
+            }
+        }
+    </script>
 </head>
 <body>
+
 <h2>Users</h2>
 
+<form id="frm1" method="post" th:action="@{/users}">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    </div>
+    <div align="center">
+        <button type="submit" class="btn-primary" name="b">Block</button>
+        <button type="submit" name="u" class="btn-primary"><i class="fa fa-unlock"></i></button>
+        <button type="submit" name="d" class="btn-primary"><i class="fa fa-trash"></i></button>
+        <table align="center">
+            <thead>
+            <th title="Select all/remove selection">
+                <input type="checkbox" onclick='checkedAll();'></th>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Status</th>
+
+            </thead>
+            <th:block th:each="user : ${allUsers}">
+                <tr>
+                    <td height="25"><input type="checkbox" th:name="${user.id}"></td>
+                    <td>
+                        <th:block th:text="${user.id}"></th:block>
+                    </td>
+                    <td>
+                        <th:block th:text="${user.username}"></th:block>
+                    </td>
+                    <td>
+                        <th:block th:text="${user.email}"></th:block>
+                    </td>
+                    <td>
+                        <th:block th:if="${user.status}">Active</th:block>
+                        <th:block th:unless="${user.status}">Blocked</th:block>
+                    </td>
+                    <td>
+                        <a th:href="@{'profile?name=' + ${user.username} }">
+                            Open profile
+                        </a>
+                    </td>
+                </tr>
+            </th:block>
+        </table>
+    </div>
+</form>
 </body>
 </html>

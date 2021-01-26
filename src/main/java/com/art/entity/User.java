@@ -118,4 +118,12 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    public boolean isAdmin() {
+        for (Role role : roles) {
+            if (role.getId() == 2L)
+                return true;
+        }
+        return false;
+    }
 }

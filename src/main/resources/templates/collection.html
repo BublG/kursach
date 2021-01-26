@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h4><th:block th:text="${name}"></th:block></h4>
+<img th:src="${image}" height="200" width="200">
+<h5>Topic: </h5> <th:block th:text="${topic}"></th:block>
+<h5>Description: </h5> <th:block th:text="${descr}"></th:block>
+<h5>Creator: </h5> <th:block th:text="${creator}"></th:block>
+<form th:if="${owner}" action="/collection/addItem">
+    <button>Add item</button>
+</form>
+</body>
+</html>

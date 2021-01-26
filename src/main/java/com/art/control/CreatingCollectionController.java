@@ -43,7 +43,7 @@ public class CreatingCollectionController {
             model.addAttribute("nameError", "Collection with the same name already exists");
             return "createCollection";
         }
-        return "redirect:/profile";
+        return "redirect:/profile?name=" + user.getUsername();
     }
 
     private boolean checkFields(Map<String, String> form, Model model) {

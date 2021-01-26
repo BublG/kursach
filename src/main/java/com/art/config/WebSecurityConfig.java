@@ -26,7 +26,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/", "/login", "/registration",
-                        "/built/bundle.js").permitAll()
+                        "/built/bundle.js", "/collection").permitAll()
                 .antMatchers("/users").hasRole("ADMIN")
                 .antMatchers("/profile/**").hasRole("USER")
                 .anyRequest().authenticated()
