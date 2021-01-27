@@ -33,7 +33,7 @@ public class CollectionController {
         model.addAttribute("creator", username);
         model.addAttribute("items", collection.getItems());
         if (principal != null) {
-            User user = (User) principal;
+            User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             if (user.getUsername().equals(username) || user.isAdmin()) {
                 model.addAttribute("owner", true);
             }
