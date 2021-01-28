@@ -52,8 +52,7 @@ public class UserService implements UserDetailsService {
     }
 
     public boolean saveUser(User user) {
-        User userFromDB = userRepository.findUserById(user.getId());
-        if (userFromDB != null) {
+        if (userRepository.findUserById(user.getId()) != null) {
             return false;
         }
         user.setRoles(Collections.singleton(new Role(1L, "ROLE_USER")));

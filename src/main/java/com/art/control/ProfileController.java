@@ -24,7 +24,7 @@ public class ProfileController {
 
     @GetMapping("/profile")
     public String profile(Model model, @RequestParam String name) {
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = (User) userService.loadUserByUsername(name);
         model.addAttribute("username", name);
         model.addAttribute("collections", user.getItemCollections());
         return "profile";

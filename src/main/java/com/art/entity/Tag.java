@@ -21,6 +21,11 @@ public class Tag {
     public Tag() {
     }
 
+    public Tag(String name, Set<Item> items) {
+        this.name = name;
+        this.items = items;
+    }
+
     public Set<Item> getItems() {
         return items;
     }

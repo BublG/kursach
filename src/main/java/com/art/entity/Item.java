@@ -24,6 +24,12 @@ public class Item {
 
     public Item(){}
 
+    public Item(@Size(min = 1) String name, ItemCollection itemCollection, Set<Tag> tags) {
+        this.name = name;
+        this.itemCollection = itemCollection;
+        this.tags = tags;
+    }
+
     public Set<Tag> getTags() {
         return tags;
     }

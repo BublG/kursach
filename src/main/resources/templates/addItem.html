@@ -1,10 +1,69 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@yaireo/tagify@3.1.0/dist/tagify.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify@3.1.0/dist/tagify.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+    <style>
+        .tags-look .tagify__dropdown__item{
+            display: inline-block;
+            border-radius: 3px;
+            padding: .3em .5em;
+            border: 1px solid #CCC;
+            background: #F3F3F3;
+            margin: .2em;
+            font-size: .85em;
+            color: black;
+            transition: 0s;
+        }
+
+        .tags-look .tagify__dropdown__item--active{
+            color: black;
+        }
+
+        .tags-look .tagify__dropdown__item:hover{
+            background: lightyellow;
+            border-color: gold;
+        }
+    </style>
 </head>
 <body>
-Add item
+
+<form th:action="@{'/collection/addItem?id=' + ${id} }" method="post">
+    <input type="hidden"
+           th:name="${_csrf.parameterName}"
+           th:value="${_csrf.token}"/>
+
+    <input type="hidden" id="im" name="image"/>
+    <p>
+    <h3>Name</h3>
+    <label>
+        <input type="text" name="name"/>
+<!--        <span th:text="${nameError}"></span>-->
+    </label>
+
+    <h3>Tags</h3>
+    <label>
+        <input name="tags" placeholder="write some tags">
+    </label>
+
+    <script th:inline="javascript">
+        const input = document.querySelector('input[name="tags"]');
+        tagify = new Tagify(input, {
+            whitelist: [[${tags}]],
+                maxTags: 10,
+                dropdown: {
+                    maxItems: 20,           // <- mixumum allowed rendered suggestions
+                    classname: "tags-look", // <- custom classname for this dropdown, so it could be targeted
+                    enabled: 0,             // <- show suggestions on focus
+                    closeOnSelect: false    // <- do not hide the suggestions dropdown once an item has been selected
+                }
+            });
+    </script>
+
+    <button type="submit">Add</button>
+</form>
 </body>
 </html>

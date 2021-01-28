@@ -26,12 +26,8 @@ public class CollectionController {
     public String collections(Model model, @RequestParam Long id, Principal principal) {
         ItemCollection collection = collectionService.findById(id);
         String username = collection.getUser().getUsername(); //owner
-        model.addAttribute("image", collection.getImage());
-        model.addAttribute("name", collection.getName());
-        model.addAttribute("descr", collection.getDescription());
-        model.addAttribute("topic", collection.getTopic());
+        model.addAttribute("collection", collection);
         model.addAttribute("creator", username);
-        model.addAttribute("items", collection.getItems());
         if (principal != null) {
             User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             if (user.getUsername().equals(username) || user.isAdmin()) {
