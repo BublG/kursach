@@ -99,4 +99,10 @@ public class ItemCollection {
     public int getItemsCount() {
         return items.size();
     }
+
+    public void setFields(String name, String description, String topic) {
+        this.name = name;
+        this.description = description;
+        this.topic = topic;
+    }
 }

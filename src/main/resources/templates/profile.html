@@ -49,6 +49,9 @@
                     <button type="submit">Delete</button>
                 </form>
             </td>
+            <td><a th:href="'/profile/editCollection?id=' + ${collection.id}">
+                <button>Edit</button>
+            </a></td>
             <td>
                 <a th:href="@{'/collection?id=' + ${collection.id} }">
                     Open

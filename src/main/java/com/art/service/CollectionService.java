@@ -27,13 +27,8 @@ public class CollectionService {
         this.collectionRepository = collectionRepository;
     }
 
-    public boolean saveCollection(ItemCollection itemCollection) {
-        ItemCollection fromDB = collectionRepository.findItemCollectionById(itemCollection.getId());
-        if (fromDB != null) {
-            return false;
-        }
+    public void saveCollection(ItemCollection itemCollection) {
         collectionRepository.save(itemCollection);
-        return true;
     }
 
     public ItemCollection findById(Long id) {
@@ -52,5 +47,10 @@ public class CollectionService {
 
     public List<ItemCollection> findAll() {
         return collectionRepository.findAll();
+    }
+
+
+    public ItemCollection findCollectionByName(String name) {
+        return collectionRepository.findItemCollectionByName(name);
     }
 }

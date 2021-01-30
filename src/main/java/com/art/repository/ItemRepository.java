@@ -7,4 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface ItemRepository extends JpaRepository<Item, Long> {
     void deleteAllByItemCollection(ItemCollection itemCollection);
     Item findItemById(Long id);
+    Item findItemByName(String name);
 }

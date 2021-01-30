@@ -24,7 +24,6 @@ public class TagService {
         Set<String> names = new HashSet<>();
         for (Tag tag : tags)
             names.add(tag.getName());
-        System.out.println(names);
         return names;
     }
 
@@ -35,4 +34,5 @@ public class TagService {
     public Tag loadTagByName(String name) {
         return tagRepository.findTagByName(name);
     }
+
 }

@@ -3,31 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@yaireo/tagify@3.1.0/dist/tagify.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@yaireo/tagify@3.1.0/dist/tagify.css"/>
     <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify@3.1.0/dist/tagify.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
-    <style>
-        .tags-look .tagify__dropdown__item{
-            display: inline-block;
-            border-radius: 3px;
-            padding: .3em .5em;
-            border: 1px solid #CCC;
-            background: #F3F3F3;
-            margin: .2em;
-            font-size: .85em;
-            color: black;
-            transition: 0s;
-        }
-
-        .tags-look .tagify__dropdown__item--active{
-            color: black;
-        }
-
-        .tags-look .tagify__dropdown__item:hover{
-            background: lightyellow;
-            border-color: gold;
-        }
-    </style>
 </head>
 <body>
 
@@ -38,35 +16,38 @@
            th:name="${_csrf.parameterName}"
            th:value="${_csrf.token}"/>
 
+    <input th:if="${name}" type="hidden" th:name="edit" th:value="${name}">
     <p>
     <h3>Name</h3>
     <label>
-        <input type="text" name="name"/>
+        <input th:value="${name}" type="text" name="name"/>
         <span th:text="${nameError}"></span>
     </label>
 
     <h3>Tags</h3>
-    <label>
-        <input name="tags" placeholder="write some tags">
-        <span th:text="${tagsError}"></span>
-    </label>
-
-    <script th:inline="javascript">
-        const input = document.querySelector('input[name="tags"]');
-        tagify = new Tagify(input, {
-            whitelist: [[${tags}]],
-                maxTags: 10,
-                dropdown: {
-                    maxItems: 20,           // <- mixumum allowed rendered suggestions
-                    classname: "tags-look", // <- custom classname for this dropdown, so it could be targeted
-                    enabled: 0,             // <- show suggestions on focus
-                    closeOnSelect: false    // <- do not hide the suggestions dropdown once an item has been selected
-                }
-            });
-    </script>
-
+        <label>
+            <input name='tags' class='some_class_name' placeholder='write some tags'
+                   th:value="${myTags}">
+            <span th:text="${tagsError}"></span>
+        </label>
+        <script th:inline="javascript">
+            const input = document.querySelector('input[name="tags"]'),
+                tagify = new Tagify(input, {
+                    whitelist: [[${tags}]],
+                    maxTags: 10,
+                    dropdown: {
+                        maxItems: 20,
+                        classname: "tags-look",
+                        enabled: 0,
+                        closeOnSelect: false
+                    }
+                });
+        </script>
     <br>
-    <button type="submit">Add</button>
+    <button type="submit">
+        <th:block th:if="${name}">Save</th:block>
+        <th:block th:unless="${name}">Add</th:block>
+    </button>
 </form>
 </body>
 </html>

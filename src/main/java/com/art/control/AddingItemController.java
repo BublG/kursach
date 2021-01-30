@@ -62,9 +62,28 @@ public class AddingItemController {
                           @RequestParam Long id, Principal principal) {
         if (!checkName(form, model))
             return addItem(model, id);
-        ItemCollection collection = collectionService.findById(id);
-        Item item = new Item(form.get("name"), collection, new HashSet<>());
-        collection.getItems().add(item);
+        if (form.containsKey("edit")) {
+            editItem(form);
+        } else {
+           addItem(form, id);
+        }
+        return "redirect:/" + collectionController.collections(model, id, principal) + "?id=" + id;
+    }
+
+    private boolean checkName(Map<String, String> form, Model model) {
+        boolean b = true;
+        if (form.get("name").length() == 0) {
+            model.addAttribute("nameError", "This field is necessarily");
+            b = false;
+        }
+        if (form.get("tags").length() == 0) {
+            model.addAttribute("tagsError", "This field is necessarily");
+            b = false;
+        }
+        return b;
+    }
+
+    private void setTags(Map<String, String> form, Item item) {
         JSONArray tags = new JSONArray(form.get("tags"));
         for (Object tag : tags) {
             String name = ((JSONObject) tag).getString("value");
@@ -79,20 +98,21 @@ public class AddingItemController {
                 tagService.save(t);
             }
         }
-        itemService.save(item);
-        return "redirect:/" + collectionController.collections(model, id, principal) + "?id=" + id;
     }
 
-    private boolean checkName(Map<String, String> form, Model model) {
-       boolean b = true;
-       if (form.get("name").length() == 0) {
-           model.addAttribute("nameError", "This field is necessarily");
-           b = false;
-       }
-       if (form.get("tags").length() == 0) {
-           model.addAttribute("tagsError", "This field is necessarily");
-           b = false;
-       }
-       return b;
+    private void editItem(Map<String, String> form) {
+        Item item = itemService.findItemByName(form.get("edit"));
+        item.setName(form.get("name"));
+        item.getTags().clear();
+        setTags(form, item);
+        itemService.save(item);
+    }
+
+    private void addItem(Map<String, String> form, Long id) {
+        ItemCollection collection = collectionService.findById(id);
+        Item item = new Item(form.get("name"), collection, new HashSet<>());
+        collection.getItems().add(item);
+        setTags(form, item);
+        itemService.save(item);
     }
 }

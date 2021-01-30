@@ -33,15 +33,11 @@ public class CreatingCollectionController {
     public String createCollection(@RequestParam Map<String, String> form, Model model) {
         if (!checkFields(form, model))
             return "createCollection";
-        ItemCollection itemCollection = new ItemCollection(form.get("name"),
-                form.get("description"), form.get("topic"), new HashSet<>(),
-                form.get("image"));
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        itemCollection.setUser(user);
-        user.getItemCollections().add(itemCollection);
-        if (!collectionService.saveCollection(itemCollection)) {
-            model.addAttribute("nameError", "Collection with the same name already exists");
-            return "createCollection";
+        if (form.containsKey("edit")) {
+            editing(form);
+        } else {
+            creating(form, user);
         }
         return "redirect:/profile?name=" + user.getUsername();
     }
@@ -57,5 +53,21 @@ public class CreatingCollectionController {
             b = false;
         }
         return b;
+    }
+
+    private void editing(Map<String, String> form) {
+        ItemCollection collection = collectionService.findCollectionByName(form.get("edit"));
+        collection.setFields(form.get("name"), form.get("description"), form.get("topic"));
+        if (form.get("image").length() != 0)
+            collection.setImage(form.get("image"));
+        collectionService.saveCollection(collection);
+    }
+
+    private void creating(Map<String, String> form, User user) {
+        ItemCollection itemCollection = new ItemCollection(form.get("name"),
+                form.get("description"), form.get("topic"), new HashSet<>(), form.get("image"));
+        itemCollection.setUser(user);
+        user.getItemCollections().add(itemCollection);
+        collectionService.saveCollection(itemCollection);
     }
 }
