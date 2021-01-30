@@ -1,21 +1,32 @@
 package com.art.control;
 
+import com.art.entity.Item;
 import com.art.entity.ItemCollection;
 import com.art.entity.User;
 import com.art.service.CollectionService;
+import com.art.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
+import java.util.Map;
 
 @Controller
 public class CollectionController {
 
     private CollectionService collectionService;
+
+    private ItemService itemService;
+
+    @Autowired
+    public void setItemService(ItemService itemService) {
+        this.itemService = itemService;
+    }
 
     @Autowired
     public void setCollectionService(CollectionService collectionService) {
@@ -35,5 +46,14 @@ public class CollectionController {
             }
         }
         return "collection";
+    }
+
+    @PostMapping("/collection")
+    public String collections(Model model, @RequestParam Long id, @RequestParam Map<String, String> form, Principal p) {
+        ItemCollection collection = collectionService.findById(id);
+        Item item = itemService.findItemById(Long.parseLong(form.get("item")));
+        collection.getItems().remove(item);
+        itemService.deleteItem(item);
+        return "redirect:/" + collections(model, id, p) + "?id=" + id;
     }
 }

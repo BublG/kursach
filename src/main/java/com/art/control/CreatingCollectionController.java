@@ -48,11 +48,11 @@ public class CreatingCollectionController {
 
     private boolean checkFields(Map<String, String> form, Model model) {
         boolean b = true;
-        if (form.get("name").length() < 1) {
+        if (form.get("name").length() == 0) {
             model.addAttribute("nameError", "This field is necessarily");
             b = false;
         }
-        if (form.get("description").length() < 1) {
+        if (form.get("description").length() == 0) {
             model.addAttribute("descriptionError", "This field is necessarily");
             b = false;
         }

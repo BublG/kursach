@@ -5,6 +5,7 @@
     <title>Title</title>
 </head>
 <body>
+<a href="/">To Home Page</a>
 <h4><th:block th:text="${collection.name}"></th:block></h4>
 <img th:src="${collection.image}" height="200" width="200">
 <h5>Topic: </h5> <th:block th:text="${collection.topic}"></th:block>
@@ -14,6 +15,7 @@
     <button>Add item</button>
 </a>
 
+<h3>Items:</h3>
 <table>
     <thead>
     <th>Id</th>
@@ -27,6 +29,12 @@
             <td th:text="${item.name}"></td>
             <td th:each="tag : ${item.tags}">
                 <span th:text="${tag.name}"></span>
+            </td>
+            <td>
+                <form th:action="@{'/collection?id=' + ${collection.id} }" method="post">
+                    <input type="hidden" th:value="${item.id}" name="item">
+                    <button type="submit">Delete</button>
+                </form>
             </td>
         </tr>
     </th:block>

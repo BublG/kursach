@@ -31,22 +31,24 @@
 </head>
 <body>
 
+<a th:href="@{'/collection?id=' + ${id} }">Back</a>
+
 <form th:action="@{'/collection/addItem?id=' + ${id} }" method="post">
     <input type="hidden"
            th:name="${_csrf.parameterName}"
            th:value="${_csrf.token}"/>
 
-    <input type="hidden" id="im" name="image"/>
     <p>
     <h3>Name</h3>
     <label>
         <input type="text" name="name"/>
-<!--        <span th:text="${nameError}"></span>-->
+        <span th:text="${nameError}"></span>
     </label>
 
     <h3>Tags</h3>
     <label>
         <input name="tags" placeholder="write some tags">
+        <span th:text="${tagsError}"></span>
     </label>
 
     <script th:inline="javascript">
@@ -63,6 +65,7 @@
             });
     </script>
 
+    <br>
     <button type="submit">Add</button>
 </form>
 </body>

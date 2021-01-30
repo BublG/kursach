@@ -16,9 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Map;
 
 @Controller
@@ -62,6 +60,8 @@ public class AddingItemController {
     @PostMapping("/collection/addItem")
     public String addItem(Model model, @RequestParam Map<String, String> form,
                           @RequestParam Long id, Principal principal) {
+        if (!checkName(form, model))
+            return addItem(model, id);
         ItemCollection collection = collectionService.findById(id);
         Item item = new Item(form.get("name"), collection, new HashSet<>());
         collection.getItems().add(item);
@@ -80,6 +80,19 @@ public class AddingItemController {
             }
         }
         itemService.save(item);
-        return collectionController.collections(model, id, principal);
+        return "redirect:/" + collectionController.collections(model, id, principal) + "?id=" + id;
+    }
+
+    private boolean checkName(Map<String, String> form, Model model) {
+       boolean b = true;
+       if (form.get("name").length() == 0) {
+           model.addAttribute("nameError", "This field is necessarily");
+           b = false;
+       }
+       if (form.get("tags").length() == 0) {
+           model.addAttribute("tagsError", "This field is necessarily");
+           b = false;
+       }
+       return b;
     }
 }

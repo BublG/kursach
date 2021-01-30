@@ -5,14 +5,9 @@
     <title>Title</title>
     <script type="text/javascript">
         let checked = false;
-
         function checkedAll() {
             const aa = document.getElementById("frm1");
-            if (checked == false) {
-                checked = true
-            } else {
-                checked = false
-            }
+            checked = checked === false;
             for (let i = 0; i < aa.elements.length; i++) {
                 aa.elements[i].checked = checked;
             }
@@ -22,6 +17,7 @@
 <body>
 
 <h2>Users</h2>
+<a href="/">To Home Page</a>
 
 <form id="frm1" method="post" th:action="@{/users}">
     <link rel="stylesheet"
@@ -31,6 +27,7 @@
         <button type="submit" class="btn-primary" name="b">Block</button>
         <button type="submit" name="u" class="btn-primary"><i class="fa fa-unlock"></i></button>
         <button type="submit" name="d" class="btn-primary"><i class="fa fa-trash"></i></button>
+        <button type="submit" name="a">Make admin</button>
         <table align="center">
             <thead>
             <th title="Select all/remove selection">
@@ -39,6 +36,7 @@
             <th>Username</th>
             <th>Email</th>
             <th>Status</th>
+            <th>Role</th>
 
             </thead>
             <th:block th:each="user : ${allUsers}">
@@ -56,6 +54,10 @@
                     <td>
                         <th:block th:if="${user.status}">Active</th:block>
                         <th:block th:unless="${user.status}">Blocked</th:block>
+                    </td>
+                    <td>
+                        <div th:if="${user.isAdmin()}">ADMIN</div>
+                        <div th:unless="${user.isAdmin()}">USER</div>
                     </td>
                     <td>
                         <a th:href="@{'profile?name=' + ${user.username} }">

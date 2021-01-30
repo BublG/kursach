@@ -95,4 +95,8 @@ public class ItemCollection {
     public void setUser(User user) {
         this.user = user;
     }
+
+    public int getItemsCount() {
+        return items.size();
+    }
 }

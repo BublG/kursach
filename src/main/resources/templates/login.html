@@ -15,7 +15,9 @@
                     type="hidden"
                     th:name="${_csrf.parameterName}"
                     th:value="${_csrf.token}"/>
-            <input name="password" type="password" placeholder="Password"/> <br>
+                <input name="password" type="password" placeholder="Password"/>
+            <br>
+            <div th:text="${error}"></div>
             <button type="submit">Log In</button>
             <h4><a href="/registration">Register</a></h4>
             <h4><a href="/">To home page</a></h4>

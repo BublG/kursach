@@ -21,15 +21,11 @@ public class SessionService {
 
     public void expireUserSessions(Set<String> names) {
         for (Object principal : sessionRegistry.getAllPrincipals()) {
-            System.out.println("SEARCH");
             if (principal instanceof User) {
                 UserDetails userDetails = (UserDetails) principal;
                 if (names.contains(userDetails.getUsername())) {
-                    for (SessionInformation information : sessionRegistry
-                            .getAllSessions(userDetails, true)) {
-                        System.out.println("REMOVING");
+                    for (SessionInformation information : sessionRegistry.getAllSessions(userDetails, true)) {
                         information.expireNow();
-                        //sessionRegistry.removeSessionInformation(information.getSessionId());
                     }
                 }
             }
