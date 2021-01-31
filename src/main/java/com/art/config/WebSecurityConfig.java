@@ -40,6 +40,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .usernameParameter("username")
                 .passwordParameter("password")
                 .permitAll()
+                .and().oauth2Login().defaultSuccessUrl("/gitLogin", true)
+                .loginPage("/oauth2/authorization/github")
                 .and()
                 .logout()
                 .invalidateHttpSession(true)

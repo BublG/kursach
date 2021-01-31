@@ -5,6 +5,7 @@ import com.art.entity.ItemCollection;
 import com.art.entity.User;
 import com.art.service.CollectionService;
 import com.art.service.ItemService;
+import com.art.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -23,6 +24,13 @@ public class CollectionController {
 
     private ItemService itemService;
 
+    private UserService userService;
+
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
+
     @Autowired
     public void setItemService(ItemService itemService) {
         this.itemService = itemService;
@@ -40,7 +48,7 @@ public class CollectionController {
         model.addAttribute("collection", collection);
         model.addAttribute("creator", username);
         if (principal != null) {
-            User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            User user = userService.findUserByName(principal.getName());
             if (user.getUsername().equals(username) || user.isAdmin()) {
                 model.addAttribute("owner", true);
             }

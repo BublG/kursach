@@ -16,13 +16,10 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Size(min = 1, message = "Enter username")
     private String username;
 
-    @Size(min = 4, message = "Password is at least 4 characters")
     private String password;
 
-    @Size(min = 1, message = "Enter email")
     private String email;
 
     private int status;
@@ -34,6 +31,14 @@ public class User implements UserDetails {
     private Set<Role> roles;
 
     public User() {
+    }
+
+    public User(String username, String password, String email, int status, Set<ItemCollection> itemCollections) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.status = status;
+        this.itemCollections = itemCollections;
     }
 
     public Set<Role> getRoles() {

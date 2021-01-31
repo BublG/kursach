@@ -61,8 +61,17 @@ public class UserService implements UserDetailsService {
         return true;
     }
 
+    public void saveOAuthUser(User user) {
+        user.setRoles(Collections.singleton(new Role(1L, "ROLE_USER")));
+        userRepository.save(user);
+    }
+
     public void update(User user) {
         userRepository.save(user);
+    }
+
+    public User findUserByName(String name) {
+        return userRepository.findUserByUsername(name);
     }
 
     public void deleteUser(Long userId) {

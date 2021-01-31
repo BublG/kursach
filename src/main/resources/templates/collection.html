@@ -36,13 +36,13 @@
                 <span th:text="${tag.name}"></span>
             </td>
             <td>
-                <form th:action="@{'/collection?id=' + ${collection.id} }" method="post">
+                <form th:if="${owner}" th:action="@{'/collection?id=' + ${collection.id} }" method="post">
                     <input type="hidden" th:value="${item.id}" name="item">
                     <button type="submit">Delete</button>
                 </form>
             </td>
             <td>
-                <a th:href="'/collection/editItem?id=' + ${item.id}">
+                <a th:if="${owner}" th:href="'/collection/editItem?id=' + ${item.id}">
                     <button>Edit</button>
                 </a>
             </td>

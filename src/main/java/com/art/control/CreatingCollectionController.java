@@ -3,6 +3,7 @@ package com.art.control;
 import com.art.entity.ItemCollection;
 import com.art.entity.User;
 import com.art.service.CollectionService;
+import com.art.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.security.Principal;
 import java.util.HashSet;
 import java.util.Map;
 
@@ -18,6 +20,13 @@ import java.util.Map;
 public class CreatingCollectionController {
 
     private CollectionService collectionService;
+
+    private UserService userService;
+
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
 
     @Autowired
     void setCollectionService(CollectionService collectionService) {
@@ -30,10 +39,10 @@ public class CreatingCollectionController {
     }
 
     @PostMapping("/profile/createCollection")
-    public String createCollection(@RequestParam Map<String, String> form, Model model) {
+    public String createCollection(@RequestParam Map<String, String> form, Model model, Principal principal) {
         if (!checkFields(form, model))
             return "createCollection";
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userService.findUserByName(principal.getName());
         if (form.containsKey("edit")) {
             editing(form);
         } else {

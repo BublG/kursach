@@ -33,7 +33,7 @@ public class ProfileController {
 
     @GetMapping("/profile")
     public String profile(Model model, @RequestParam String name) {
-        User user = (User) userService.loadUserByUsername(name);
+        User user = userService.findUserByName(name);
         model.addAttribute("username", name);
         model.addAttribute("collections", user.getItemCollections());
         return "profile";
