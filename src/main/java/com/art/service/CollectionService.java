@@ -31,7 +31,7 @@ public class CollectionService {
         collectionRepository.save(itemCollection);
     }
 
-    public ItemCollection findById(Long id) {
+    public ItemCollection findCollectionById(Long id) {
         ItemCollection collection = collectionRepository.findItemCollectionById(id);
         if (collection == null) {
             throw new NotFoundException("Collection not found");

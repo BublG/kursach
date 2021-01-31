@@ -30,6 +30,7 @@ public class EditingItemController {
     public String editItem(Model model, @RequestParam Long id) {
         Item item = itemService.findItemById(id);
         model.addAttribute("name", item.getName());
+        model.addAttribute("itemId", id);
         model.addAttribute("id", item.getCollection().getId());
         String myTags = itemService.getTagsNames(item).toString();
         model.addAttribute("myTags", myTags.substring(1, myTags.length() - 1));

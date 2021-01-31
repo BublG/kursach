@@ -6,6 +6,7 @@
 </head>
 <body>
 <a href="/">To Home Page</a>
+<a th:if="${username}" th:href="'/profile?name=' + ${username}">To profile</a>
 <h4>
     <th:block th:text="${collection.name}"></th:block>
 </h4>

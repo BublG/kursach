@@ -65,7 +65,7 @@ public class CreatingCollectionController {
     }
 
     private void editing(Map<String, String> form) {
-        ItemCollection collection = collectionService.findCollectionByName(form.get("edit"));
+        ItemCollection collection = collectionService.findCollectionById(Long.parseLong(form.get("edit")));
         collection.setFields(form.get("name"), form.get("description"), form.get("topic"));
         if (form.get("image").length() != 0)
             collection.setImage(form.get("image"));

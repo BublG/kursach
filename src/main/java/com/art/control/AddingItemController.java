@@ -101,7 +101,7 @@ public class AddingItemController {
     }
 
     private void editItem(Map<String, String> form) {
-        Item item = itemService.findItemByName(form.get("edit"));
+        Item item = itemService.findItemById(Long.parseLong(form.get("edit")));
         item.setName(form.get("name"));
         item.getTags().clear();
         setTags(form, item);
@@ -109,7 +109,7 @@ public class AddingItemController {
     }
 
     private void addItem(Map<String, String> form, Long id) {
-        ItemCollection collection = collectionService.findById(id);
+        ItemCollection collection = collectionService.findCollectionById(id);
         Item item = new Item(form.get("name"), collection, new HashSet<>());
         collection.getItems().add(item);
         setTags(form, item);

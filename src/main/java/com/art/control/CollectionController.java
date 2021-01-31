@@ -7,7 +7,6 @@ import com.art.service.CollectionService;
 import com.art.service.ItemService;
 import com.art.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,11 +42,12 @@ public class CollectionController {
 
     @GetMapping("/collection")
     public String collections(Model model, @RequestParam Long id, Principal principal) {
-        ItemCollection collection = collectionService.findById(id);
+        ItemCollection collection = collectionService.findCollectionById(id);
         String username = collection.getUser().getUsername(); //owner
         model.addAttribute("collection", collection);
         model.addAttribute("creator", username);
         if (principal != null) {
+            model.addAttribute("username", principal.getName());
             User user = userService.findUserByName(principal.getName());
             if (user.getUsername().equals(username) || user.isAdmin()) {
                 model.addAttribute("owner", true);
@@ -58,7 +58,7 @@ public class CollectionController {
 
     @PostMapping("/collection")
     public String collections(Model model, @RequestParam Long id, @RequestParam Map<String, String> form, Principal p) {
-        ItemCollection collection = collectionService.findById(id);
+        ItemCollection collection = collectionService.findCollectionById(id);
         Item item = itemService.findItemById(Long.parseLong(form.get("item")));
         collection.getItems().remove(item);
         itemService.deleteItem(item);

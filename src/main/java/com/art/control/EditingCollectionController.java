@@ -20,10 +20,11 @@ public class EditingCollectionController {
 
     @GetMapping("/profile/editCollection")
     public String editCollection(Model model, @RequestParam Long id) {
-        ItemCollection collection = collectionService.findById(id);
+        ItemCollection collection = collectionService.findCollectionById(id);
         model.addAttribute("name", collection.getName());
         model.addAttribute("descr", collection.getDescription());
         model.addAttribute("topic", collection.getTopic());
+        model.addAttribute("id", id);
         return "createCollection";
     }
 }

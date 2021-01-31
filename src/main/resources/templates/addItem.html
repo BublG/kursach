@@ -16,7 +16,7 @@
            th:name="${_csrf.parameterName}"
            th:value="${_csrf.token}"/>
 
-    <input th:if="${name}" type="hidden" th:name="edit" th:value="${name}">
+    <input th:if="${itemId}" type="hidden" name="edit" th:value="${itemId}">
     <p>
     <h3>Name</h3>
     <label>
@@ -45,8 +45,8 @@
         </script>
     <br>
     <button type="submit">
-        <th:block th:if="${name}">Save</th:block>
-        <th:block th:unless="${name}">Add</th:block>
+        <th:block th:if="${itemId}">Save</th:block>
+        <th:block th:unless="${itemId}">Add</th:block>
     </button>
 </form>
 </body>

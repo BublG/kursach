@@ -7,8 +7,8 @@
 <body>
 <h1>Creating a collection</h1>
 <button id="upload_widget" class="cloudinary-button">
-    <th:block th:if="${name}">Change image</th:block>
-    <th:block th:unless="${name}">Upload files</th:block>
+    <th:block th:if="${id}">Change image</th:block>
+    <th:block th:unless="${id}">Upload files</th:block>
 </button>
 <form action="/profile/createCollection" method="post">
 
@@ -42,7 +42,7 @@
            th:name="${_csrf.parameterName}"
            th:value="${_csrf.token}"/>
 
-    <input th:if="${name}" type="hidden" th:name="edit" th:value="${name}">
+    <input th:if="${id}" type="hidden" name="edit" th:value="${id}">
     <input type="hidden" id="im" name="image"/>
     <p>
     <h3>Name</h3>
@@ -60,7 +60,7 @@
     <h3>Topic</h3>
     <label>
         <select name="topic">
-            <option th:if="${name}" th:text="${topic}"></option>
+            <option th:if="${id}" th:text="${topic}"></option>
             <option>Alcohol</option>
             <option>Books</option>
             <option>Clothes</option>
@@ -74,8 +74,8 @@
         </select>
     </label>
     <button type="submit">
-        <th:block th:if="${name}">Save</th:block>
-        <th:block th:unless="${name}">Create</th:block>
+        <th:block th:if="${id}">Save</th:block>
+        <th:block th:unless="${id}">Create</th:block>
     </button>
 </form>
 </body>
