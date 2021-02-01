@@ -1,5 +1,6 @@
 package com.art.service;
 
+import com.art.entity.ItemCollection;
 import com.art.entity.Role;
 import com.art.entity.User;
 import com.art.repository.UserRepository;
@@ -19,6 +20,13 @@ public class UserService implements UserDetailsService {
     private UserRepository userRepository;
 
     private PasswordEncoder bCryptPasswordEncoder;
+
+    private CollectionService collectionService;
+
+    @Autowired
+    public void setCollectionService(CollectionService collectionService) {
+        this.collectionService = collectionService;
+    }
 
     @Autowired
     void setUserRepository(UserRepository userRepository) {
@@ -75,8 +83,13 @@ public class UserService implements UserDetailsService {
     }
 
     public void deleteUser(Long userId) {
-        if (userRepository.findById(userId).isPresent()) {
-            userRepository.deleteById(userId);
+        User user = userRepository.findUserById(userId);
+        if (user != null) {
+            for (ItemCollection icol : user.getItemCollections()) {
+                icol.setUser(null);
+                collectionService.saveCollection(icol);
+            }
+            userRepository.delete(user);
         }
     }
 }

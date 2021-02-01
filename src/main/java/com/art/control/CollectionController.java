@@ -43,9 +43,14 @@ public class CollectionController {
     @GetMapping("/collection")
     public String collections(Model model, @RequestParam Long id, Principal principal) {
         ItemCollection collection = collectionService.findCollectionById(id);
-        String username = collection.getUser().getUsername(); //owner
         model.addAttribute("collection", collection);
-        model.addAttribute("creator", username);
+        String username = null;
+        if (collection.getUser() == null) {
+            model.addAttribute("creator", "deleted");
+        } else {
+            username = collection.getUser().getUsername(); //owner
+            model.addAttribute("creator", username);
+        }
         if (principal != null) {
             model.addAttribute("username", principal.getName());
             User user = userService.findUserByName(principal.getName());
