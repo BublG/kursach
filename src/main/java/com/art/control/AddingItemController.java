@@ -60,7 +60,7 @@ public class AddingItemController {
     @PostMapping("/collection/addItem")
     public String addItem(Model model, @RequestParam Map<String, String> form,
                           @RequestParam Long id, Principal principal) {
-        if (!checkName(form, model))
+        if (!checkFields(form, model))
             return addItem(model, id);
         if (form.containsKey("edit")) {
             editItem(form);
@@ -70,7 +70,7 @@ public class AddingItemController {
         return "redirect:/" + collectionController.collections(model, id, principal) + "?id=" + id;
     }
 
-    private boolean checkName(Map<String, String> form, Model model) {
+    private boolean checkFields(Map<String, String> form, Model model) {
         boolean b = true;
         if (form.get("name").length() == 0) {
             model.addAttribute("nameError", "This field is necessarily");

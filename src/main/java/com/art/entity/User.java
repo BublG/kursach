@@ -16,10 +16,13 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Size(min = 1)
     private String username;
 
+    @Size(min = 1)
     private String password;
 
+    @Size(min = 1)
     private String email;
 
     private int status;

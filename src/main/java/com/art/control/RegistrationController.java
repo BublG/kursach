@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
 import java.util.HashSet;
+import java.util.Map;
 
 @Controller
 public class RegistrationController {
@@ -23,16 +24,14 @@ public class RegistrationController {
     }
 
     @GetMapping("/registration")
-    public String registration() {
+    public String registration(Model model) {
         return "registration";
     }
 
     @PostMapping("/registration")
     public String addUser(@Valid User userForm, BindingResult bindingResult, Model model) {
-        if (bindingResult.hasErrors()) {
-            model.addAttribute("errors", bindingResult.getAllErrors());
+        if (bindingResult.hasErrors())
             return "registration";
-        }
         userForm.setStatus(1);
         userForm.setItemCollections(new HashSet<>());
         if (!userService.saveUser(userForm)) {
